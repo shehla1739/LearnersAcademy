@@ -19,11 +19,11 @@ public class Subject {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int sid;
 	private String name;
-	@ManyToOne
-	//set relationship 
+	@ManyToOne(cascade= {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH})
+	@JoinColumn(name="tid")
 	private Teacher teacher;
 	
-	@ManyToMany(cascade = CascadeType.ALL)  //Owning Side of M:M Student:Class
+	@ManyToMany(cascade= {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH})  //Owning Side of M:M Student:Class
 	@JoinTable(name="Subject_Class", 
 	joinColumns=@JoinColumn(name="sid"),
 	inverseJoinColumns=@JoinColumn(name="cid"))

@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
@@ -20,10 +22,12 @@ public class AcademicClass {
 	private String duration;
 	
 	@ManyToMany(mappedBy="classes", cascade=CascadeType.ALL)   //non-owning side of M:M Student:Class, use mappedBy reference from owning side
+	@JoinTable(name="Subject_Class", 
+	joinColumns=@JoinColumn(name="cid"),
+	inverseJoinColumns=@JoinColumn(name="sid"))
 	private Set<Subject> subjects=new HashSet<>(); 
 	
-	@OneToMany
-	//setup relationship
+	@OneToMany(mappedBy="academicClass",cascade= {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH})
 	private Set<Student> students=new HashSet<>();
 	
 	public int getCid() {
@@ -48,12 +52,14 @@ public class AcademicClass {
 	//helper methods
 	public void addSubject(Subject subject) {
 		subjects.add(subject);
+		//subject.se
 	}
 	public void removeSubject(Subject subject) {
 		subjects.remove(subject);
 	}
 	public void addStudent(Student student) {
 		students.add(student);
+		student.setAcademicClass(this);
 	}
 	public void removeStudent(Student student) {
 		students.remove(student);

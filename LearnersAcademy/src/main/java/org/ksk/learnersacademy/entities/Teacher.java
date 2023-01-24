@@ -3,6 +3,7 @@ package org.ksk.learnersacademy.entities;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,8 +20,7 @@ public class Teacher {
 	private String address;
 	private String designation;
 	private String skill;
-	@OneToMany
-	//set relationship
+	@OneToMany(mappedBy="teacher",cascade= {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH})
 	private Set<Subject> subjects=new HashSet<>();	
 	
 	
@@ -62,7 +62,8 @@ public class Teacher {
 	}
 	//helper methods
 	public void addSubject(Subject subject) {
-		subjects.add(subject);	
+		subjects.add(subject);
+		subject.setTeacher(this);
 	}
 	public void removeSubject(Subject subject) {
 		subjects.remove(subject);

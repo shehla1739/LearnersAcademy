@@ -1,9 +1,11 @@
 package org.ksk.learnersacademy.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -15,8 +17,8 @@ public class Student {
 	private String address;
 	private int age;
 	
-	@ManyToOne
-	//set up relationship 
+	@ManyToOne(cascade= {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH})
+	@JoinColumn(name="cid")
 	private AcademicClass academicClass;
 
 	public int getStdid() {
