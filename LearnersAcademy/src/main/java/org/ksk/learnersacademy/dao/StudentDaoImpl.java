@@ -7,38 +7,37 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.ksk.learnersacademy.config.HibConfig;
-import org.ksk.learnersacademy.entities.Teacher;
+import org.ksk.learnersacademy.entities.Student;
 
-public class TeacherDaoImpl implements TeacherDao{
-	
+public class StudentDaoImpl implements StudentDao{
 	@Override
-	public Teacher get(int tid) {
+	public Student get(int stdid) {
 		SessionFactory factory=HibConfig.getSessionFactory();
 		Session session= factory.openSession();
 		
-		Teacher teacher=session.get(Teacher.class, tid);  
-		return teacher;
+		Student student=session.get(Student.class, stdid);  
+		return student;
 	}
 
 
 	@Override
-	public List<Teacher> getAll() {
+	public List<Student> getAll() {
 		SessionFactory factory=HibConfig.getSessionFactory();
 		Session session= factory.openSession();
 
-		Query<Teacher> query=session.createQuery("select t from org.ksk.learnersacademy.entities.Teacher t");
+		Query<Student> query=session.createQuery("select s from org.ksk.learnersacademy.entities.Student s");
 		return query.list();
 	}
 
 	@Override
-	public void insert(Teacher teacher) {
+	public void insert(Student student) {
 		SessionFactory factory=HibConfig.getSessionFactory();
 		Session session= factory.openSession();
 		Transaction tx=null;
 		try {
 			tx=session.beginTransaction();
-			//save teacher object to db
-			session.save(teacher);
+			//save student object to db
+			session.save(student);
 			tx.commit();
 			
 		}catch (Exception e) {
@@ -49,13 +48,13 @@ public class TeacherDaoImpl implements TeacherDao{
 	}
 
 	@Override
-	public void delete(Teacher teacher) {
+	public void delete(Student student) {
 		SessionFactory factory=HibConfig.getSessionFactory();
 		Session session= factory.openSession();
 		Transaction tx=null;
 		try {
 			tx=session.beginTransaction();			
-			session.delete(teacher);
+			session.delete(student);
 			tx.commit();
 			
 		}catch (Exception e) {
@@ -66,14 +65,14 @@ public class TeacherDaoImpl implements TeacherDao{
 	}
 
 	@Override
-	public void update(Teacher teacher) {
+	public void update(Student student) {
 		SessionFactory factory=HibConfig.getSessionFactory();
 		Session session= factory.openSession();
 		Transaction tx=null;
 		try {
 			tx=session.beginTransaction();
-			// save/update teacher object to db
-			session.save(teacher);
+			// save/update student object to db
+			session.save(student);
 			tx.commit();
 			
 		}catch (Exception e) {
@@ -82,6 +81,4 @@ public class TeacherDaoImpl implements TeacherDao{
 		}
 		
 	}
-
-	
 }
