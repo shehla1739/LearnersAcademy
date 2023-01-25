@@ -9,6 +9,7 @@ import org.ksk.learnersacademy.entities.AcademicClass;
 import org.ksk.learnersacademy.entities.Student;
 import org.ksk.learnersacademy.entities.Subject;
 import org.ksk.learnersacademy.entities.Teacher;
+import org.ksk.learnersacademy.entities.User;
 
 public class HibConfig {
 	public static SessionFactory getSessionFactory() {
@@ -26,6 +27,7 @@ public class HibConfig {
 		configuration.addAnnotatedClass(Student.class);
 		configuration.addAnnotatedClass(AcademicClass.class);
 		configuration.addAnnotatedClass(Subject.class);
+		configuration.addAnnotatedClass(User.class);
 		
 		SessionFactory sessionFactory=configuration.buildSessionFactory();
 		return sessionFactory;
